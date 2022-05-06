@@ -1,7 +1,9 @@
-import { emailUSer } from "./enviroment/variables";
+import { emailUSer, MONGO_SERVER, MONGODB_NAME } from "./enviroment/variables";
 
 import XLSX from "xlsx";
 import { TypeDate } from "./interfaces/dates";
+import { getCalendarsFromDb } from "./helpers/helpers";
+const mongoose = require("mongoose");
 
 const ruta = "./data/tipocitas.xls";
 
@@ -20,4 +22,14 @@ const getTipoCitasFromXlsx = (fileRoot: string) => {
   }
 };
 
-const calendarsZoho = getTipoCitasFromXlsx(ruta);
+try {
+  mongoose.connect(`mongodb+srv://${MONGO_SERVER}/${MONGODB_NAME}`).then(() => {
+    console.log("connected to the db");
+    const calendarsZoho = getTipoCitasFromXlsx(ruta);
+    if (calendarsZoho.length < 1) {
+      console.log("no data was found");
+    }
+  });
+} catch (err) {
+  console.log("No se pudo conectar a a base de datos");
+}
