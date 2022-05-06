@@ -20,9 +20,11 @@ export class CalendarInfo {
   isActive: boolean;
   @prop({ type: String })
   watchedResourceId: string;
+  @prop({ type: String })
+  syncToken: string;
 }
 
-class Calendar {
+export class Calendar {
   @prop({ type: String })
   email: string;
   @prop({ type: String })
