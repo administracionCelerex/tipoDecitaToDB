@@ -2,7 +2,11 @@ import { emailUSer, MONGO_SERVER, MONGODB_NAME } from "./enviroment/variables";
 
 import XLSX from "xlsx";
 import { TypeDate } from "./interfaces/dates";
-import { createUserWithCalendars, getCalendarsFromDb } from "./helpers/helpers";
+import {
+  createUserWithCalendars,
+  getCalendarsFromDb,
+  getCalendarsZohoNoInFatabase,
+} from "./helpers/helpers";
 const mongoose = require("mongoose");
 
 const ruta = "./data/tipocitas.xls";
@@ -45,9 +49,19 @@ try {
         );
         return;
       }
-      const { calendarsInfo } = calendarUser;
+      let { calendarsInfo } = calendarUser;
 
-      //console.log(calendarUser);
+      if (!calendarsInfo) {
+        calendarsInfo = [];
+      }
+      //console.log("Calendarios actuales del usuario");
+
+      //console.log(calendarsInfo);
+
+      //console.log("Calendarios de Zoho");
+      //console.log(calendarsZoho);
+
+      getCalendarsZohoNoInFatabase(calendarsZoho, calendarsInfo);
     });
 } catch (err) {
   console.log("No se pudo conectar a a base de datos");

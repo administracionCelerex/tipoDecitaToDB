@@ -49,3 +49,20 @@ export const createUserWithCalendars = async (
 
   return newUserCalemndar;
 };
+
+export const getCalendarsZohoNoInFatabase = (
+  calendarsFromEcxel: TypeDate[],
+  calendarsDB: CalendarInfo[]
+) => {
+  const calendarsZoho = tranformExcelDataToCalendarInfo(calendarsFromEcxel);
+  //console.log("calendarZoho");
+  //console.log(calendarsZoho);
+  const caledarsNoinDB = calendarsZoho.filter((calendarZoho) => {
+    const idCalendarZoho = calendarZoho.calendarId;
+
+    return !calendarsDB.some((calDB) => calDB.calendarId == idCalendarZoho);
+  });
+
+  console.log("caledarsNoinDB");
+  console.log(caledarsNoinDB);
+};
