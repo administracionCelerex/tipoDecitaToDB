@@ -41,7 +41,7 @@ try {
         );
         //console.log(newUserCalendar);
         console.log(
-          `El usaurio ${emailUSer} ah sido creado con sus respectivos calendarios`
+          `El usaurio ${emailUSer} ha sido creado con sus respectivos calendarios`
         );
         return;
       }
