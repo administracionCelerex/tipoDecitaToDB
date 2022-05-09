@@ -3,7 +3,6 @@ import { MONGO_SERVER, MONGODB_NAME } from "../enviroment/variables";
 import { TypeDate } from "../interfaces/dates";
 import CalendarModels, { Calendar, CalendarInfo } from "../models/Calendars";
 
-
 export const getCalendarsFromDb = async (email: string) => {
   const userCalendar = await CalendarModels.findOne({ email }).exec();
 
@@ -64,6 +63,38 @@ export const getCalendarsZohoNoInFatabase = (
     return !calendarsDB.some((calDB) => calDB.calendarId == idCalendarZoho);
   });
 
-  console.log("caledarsNoinDB");
-  console.log(caledarsNoinDB);
+  return caledarsNoinDB;
+};
+
+export const updateCalendarsOfUser = async (
+  email: string,
+  calendarsInfoNoinDb: CalendarInfo[]
+) => {
+  try {
+    const userCal = await CalendarModels.findOne({ email });
+
+    if (!userCal) {
+      console.log(
+        "No usuario fue Encontrado con ese email para ser actualizado"
+      );
+      return null;
+    }
+
+    const calendarsInfoAux = userCal.calendarsInfo ? userCal.calendarsInfo : [];
+
+    const updatedCalendarInfo: CalendarInfo[] = [
+      ...calendarsInfoAux,
+      ...calendarsInfoNoinDb,
+    ];
+    console.log(updatedCalendarInfo);
+    //console.log(updatedCalendarInfo);
+
+    userCal.calendarsInfo = updatedCalendarInfo;
+
+    await userCal.save();
+
+    return userCal;
+  } catch (err) {
+    console.log("Error al Actualizar los calendarios a la base de datos");
+  }
 };

@@ -11,6 +11,7 @@ import {
   createUserWithCalendars,
   getCalendarsFromDb,
   getCalendarsZohoNoInFatabase,
+  updateCalendarsOfUser,
 } from "./helpers/helpers";
 const mongoose = require("mongoose");
 
@@ -59,14 +60,35 @@ try {
       if (!calendarsInfo) {
         calendarsInfo = [];
       }
-      //console.log("Calendarios actuales del usuario");
 
-      //console.log(calendarsInfo);
+      const calendarsNoinDB = getCalendarsZohoNoInFatabase(
+        calendarsZoho,
+        calendarsInfo
+      );
 
-      //console.log("Calendarios de Zoho");
-      //console.log(calendarsZoho);
+      if (calendarsNoinDB.length < 1) {
+        console.log(
+          `Todos los Calendarios del usuario ${emailUSer} ya estan en la base de datos`
+        );
+        return;
+      }
 
-      getCalendarsZohoNoInFatabase(calendarsZoho, calendarsInfo);
+      const userUpdatedCalen = await updateCalendarsOfUser(
+        emailUSer,
+        calendarsNoinDB
+      );
+
+      if (!userUpdatedCalen) {
+        console.log(
+          `Al usuario ${emailUSer} NO  se le actualizo nada revisar si fue un error`
+        );
+
+        return;
+      }
+
+      console.log(
+        `${emailUSer} Actualizado correctamente agregado ${calendarsNoinDB.length} nuevos`
+      );
     });
 } catch (err) {
   console.log("No se pudo conectar a a base de datos");
