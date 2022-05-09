@@ -2,7 +2,7 @@ import {
   emailUSer,
   MONGO_SERVER,
   MONGODB_NAME,
-  token,
+  STAGE
 } from "./enviroment/variables";
 
 import XLSX from "xlsx";
@@ -15,7 +15,7 @@ import {
 } from "./helpers/helpers";
 const mongoose = require("mongoose");
 
-const ruta = "./data/tipocitas.xls";
+const ruta = `./data/${STAGE}/tipocitas.xls`;
 
 const getTipoCitasFromXlsx = (fileRoot: string) => {
   try {
