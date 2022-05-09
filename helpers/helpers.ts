@@ -3,6 +3,7 @@ import { MONGO_SERVER, MONGODB_NAME } from "../enviroment/variables";
 import { TypeDate } from "../interfaces/dates";
 import CalendarModels, { Calendar, CalendarInfo } from "../models/Calendars";
 
+
 export const getCalendarsFromDb = async (email: string) => {
   const userCalendar = await CalendarModels.findOne({ email }).exec();
 

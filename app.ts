@@ -1,4 +1,9 @@
-import { emailUSer, MONGO_SERVER, MONGODB_NAME } from "./enviroment/variables";
+import {
+  emailUSer,
+  MONGO_SERVER,
+  MONGODB_NAME,
+  token,
+} from "./enviroment/variables";
 
 import XLSX from "xlsx";
 import { TypeDate } from "./interfaces/dates";
