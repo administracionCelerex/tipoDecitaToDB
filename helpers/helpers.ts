@@ -23,6 +23,7 @@ export const tranformExcelDataToCalendarInfo = (
         isActive: true,
         watchedResourceId: "",
         syncToken: "",
+        idZoho: calendarFomEcxel.ID,
       };
     }
   );

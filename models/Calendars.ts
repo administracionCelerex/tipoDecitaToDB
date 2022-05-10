@@ -21,6 +21,8 @@ export class CalendarInfo {
   @prop({ type: String })
   watchedResourceId: string;
   @prop({ type: String })
+  idZoho: string;
+  @prop({ type: String })
   syncToken: string;
 }
 
